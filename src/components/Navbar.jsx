@@ -7,12 +7,20 @@ import {
 
 import CloudIcon from "@mui/icons-material/Cloud";
 import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+
+import { auth } from "../services/firebase";
 
 function Navbar() {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
